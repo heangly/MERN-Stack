@@ -1,0 +1,10 @@
+.Favorite-heading{
+  font-size: 3rem;
+}
+
+
+@media(max-width: 800px){
+  .Favorite-heading{
+    font-size: 1.9rem;
+  }
+}
