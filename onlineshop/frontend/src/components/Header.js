@@ -11,14 +11,15 @@ const Header = () => {
         </LinkContainer>
         <Navbar.Toggle aria-controls='basic-navbar-nav' />
         <Navbar.Collapse id='basic-navbar-nav'>
+          {/* activekey = false, fix the active navlink */}
           <Nav className='ml-auto' activeKey='false'>
             <LinkContainer to='/cart'>
-              <Nav.Link href='#home'>
+              <Nav.Link>
                 <i className='fas fa-shopping-cart' /> CART
               </Nav.Link>
             </LinkContainer>
-            <LinkContainer to='/signin'>
-              <Nav.Link href='#link'>
+            <LinkContainer to='/login'>
+              <Nav.Link>
                 <i className='fas fa-user' /> SIGN IN
               </Nav.Link>
             </LinkContainer>
