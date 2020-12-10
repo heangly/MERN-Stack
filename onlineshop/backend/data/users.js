@@ -4,7 +4,7 @@ const users = [
   {
     name: 'Admin User',
     email: 'admin@example.com',
-    // (plainpassword, round)
+    // (plain-password, round)
     password: bycrypt.hashSync('123456', 10),
     isAdmin: true,
   },

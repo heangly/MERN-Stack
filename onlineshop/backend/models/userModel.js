@@ -17,7 +17,7 @@ const userSchema = new mongoose.Schema(
       required: true,
     },
     isAdmin: {
-      type: boolean,
+      type: Boolean,
       required: true,
       default: false,
     },
@@ -41,4 +41,3 @@ userSchema.method.matchPassword = async function (enteredPassword) {
 
 const User = mongoose.model('User', userSchema);
 export default User;
-y;
