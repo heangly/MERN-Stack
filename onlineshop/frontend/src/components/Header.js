@@ -4,7 +4,12 @@ import { LinkContainer } from 'react-router-bootstrap';
 
 const Header = () => {
   return (
-    <Navbar bg='dark' variant='dark' expand='lg' className='py-3'>
+    <Navbar
+      variant='dark'
+      expand='lg'
+      className='py-3'
+      style={{ background: 'black' }}
+    >
       <Container>
         <LinkContainer to='/'>
           <Navbar.Brand>ONLINE SHOP</Navbar.Brand>
