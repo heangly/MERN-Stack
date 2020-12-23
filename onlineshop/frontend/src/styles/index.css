@@ -28,3 +28,12 @@ main a:hover {
 nav .nav-link {
   font-size: 0.8rem;
 }
+
+th,
+td {
+  font-size: 0.9em;
+}
+
+table {
+  text-align: center;
+}

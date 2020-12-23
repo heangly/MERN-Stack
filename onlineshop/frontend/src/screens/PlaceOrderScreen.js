@@ -6,6 +6,7 @@ import { Link } from 'react-router-dom';
 import Message from '../components/Message';
 import CheckoutSteps from '../components/CheckoutSteps';
 import { createOrder } from '../actions/orderActions';
+import { CART_RESET_ITEM } from '../constants/cartConstants';
 
 const PlaceOrderScreen = ({ history }) => {
   const dispatch = useDispatch();
@@ -25,6 +26,12 @@ const PlaceOrderScreen = ({ history }) => {
     cart.itemsPrice + cart.shippingPrice + Number(cart.taxPrice);
 
   const placeOrderHandler = (e) => {
+    dispatch({
+      type: CART_RESET_ITEM,
+    });
+
+    localStorage.removeItem('cartItems');
+
     const {
       cartItems,
       shippingAddress,
@@ -53,7 +60,7 @@ const PlaceOrderScreen = ({ history }) => {
     if (success && order) {
       history.push(`/order/${order._id}`);
     }
-  }, [history, success, cart.paymentMethod, order]);
+  }, [history, success, cart.paymentMethod, order, dispatch]);
 
   return (
     <>
@@ -149,9 +156,7 @@ const PlaceOrderScreen = ({ history }) => {
               </Row>
             </ListGroup.Item>
 
-            <ListGroup.Item>
-              {error && <Message>{error}</Message>}
-            </ListGroup.Item>
+            {error && <Message>{error}</Message>}
 
             <ListGroup.Item>
               <Button
