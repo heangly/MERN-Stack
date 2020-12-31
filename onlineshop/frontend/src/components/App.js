@@ -48,6 +48,7 @@ const App = () => {
             path='/admin/product/:id/edit'
             component={ProductEditScreen}
           />
+          <Route exact path='/search/:keyword' component={HomeScreen} />
           <Route exact path='/' component={HomeScreen} />
         </Container>
       </main>
