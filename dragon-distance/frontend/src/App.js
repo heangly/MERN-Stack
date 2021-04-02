@@ -5,6 +5,7 @@ import Auth from './pages/Auth'
 import Register from './pages/Register'
 import About from './pages/About'
 import Alert from './pages/Alert'
+import './styles/app.css'
 
 const App = () => {
   return (

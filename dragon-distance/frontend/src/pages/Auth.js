@@ -38,7 +38,7 @@ const Auth = ({ history }) => {
 
   return (
     <>
-      <div className='auth text-center my-5'>
+      <div className='auth text-center mt-5'>
         {error && <div className='alert alert-danger'>{error}</div>}
         <h1 className='my-5'>Sign In</h1>
         <form

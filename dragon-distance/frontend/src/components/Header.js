@@ -10,9 +10,15 @@ const Header = () => {
   }, [location.pathname, user])
 
   return (
-    <nav className='navbar navbar-expand-lg navbar-dark bg-primary'>
+    <nav className='navbar navbar-expand-lg navbar-dark bg-dark'>
       <div className='container'>
         <Link className='navbar-brand' to='/home'>
+          <img
+            src='https://drexel.edu/~/media/Images/identity/athletics/athletics_primary_dragon.ashx?la=en'
+            alt=''
+            className='img-fluid'
+            style={{ width: '100px', marginRight: '20px' }}
+          />
           Dragon Distance
         </Link>
         <button

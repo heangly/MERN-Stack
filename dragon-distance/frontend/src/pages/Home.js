@@ -15,7 +15,7 @@ const Home = ({ history }) => {
 
   useEffect(() => {
     const user = JSON.parse(localStorage.getItem('loginUser'))
-    !user.name && history.push('/')
+    !user && history.push('/')
     setUser(user.name)
 
     fetchData()

@@ -49,7 +49,7 @@ const Register = ({ history }) => {
         {error && <div className='alert alert-danger'>{error}</div>}
         <h1 className='my-5'>Register</h1>
         <form
-          className='col-10 m-auto border p-5 rounded'
+          className='col-8 m-auto border p-5 rounded'
           onSubmit={handleSubmit}
         >
           <div className='form-group row'>
