@@ -1,10 +1,12 @@
-import products from './products.js'
+import products from './data/products.js'
 import express from 'express'
-import 'colors'
 import dotenv from 'dotenv'
+import connectDB from './config/db.js'
+import 'colors'
 
 const app = express()
 dotenv.config()
+connectDB()
 
 app.get('/', (req, res) => {
   res.send('API is running')
