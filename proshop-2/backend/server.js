@@ -3,6 +3,7 @@ const { notFound, errorHandler } = require('./middleware/errorMiddleware')
 const dotenv = require('dotenv')
 const productRoutes = require('./routes/productRoutes.js')
 const userRoutes = require('./routes/userRoutes.js')
+const orderRoutes = require('./routes/orderRoutes')
 const connectDB = require('./config/db')
 require('colors')
 
@@ -18,6 +19,7 @@ app.get('/', (req, res) => {
 
 app.use('/api/products', productRoutes)
 app.use('/api/users', userRoutes)
+app.use('/api/orders', orderRoutes)
 
 app.use(notFound)
 
