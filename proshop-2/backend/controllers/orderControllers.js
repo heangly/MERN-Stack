@@ -34,4 +34,35 @@ const addOrderItems = asynHandler(async (req, res) => {
   res.status(201).json(createdOrder)
 })
 
-module.exports = { addOrderItems }
+// @desc Get order by ID
+// @route GET /api/orders/:id
+// @access Private
+const getOrderById = asynHandler(async (req, res) => {
+  const order = await Order.findById(req.params.id).populate(
+    'user',
+    'name email'
+  )
+
+  if (order) {
+    res.json(order)
+  } else {
+    res.status(404)
+    throw new Error('Order not found')
+  }
+})
+
+// @desc Update order to paid
+// @route GET /api/orders/:id/pay
+// @access Private
+const updateOrderToPaid = asynHandler(async (req, res) => {
+  const order = await Order.findById(req.params.id)
+
+  if (order) {
+    res.json(order)
+  } else {
+    res.status(404)
+    throw new Error('Order not found')
+  }
+})
+
+module.exports = { addOrderItems, getOrderById, updateOrderToPaid }
