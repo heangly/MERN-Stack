@@ -1,13 +1,23 @@
 import { useState } from 'react'
 import { Button, Modal, InputGroup, FormControl } from 'react-bootstrap'
+import { useDispatch } from 'react-redux'
+import { AppDispatch } from '../../app/store'
+import { IUserData, loginUser, registerUser } from '../../features/authSlice'
 
 interface Iprops {
   text: string
   variant: 'primary' | 'secondary' | 'danger'
+  isSignupFlow: boolean
 }
 
-const ModalComponent: React.FC<Iprops> = ({ text, variant }) => {
+const ModalComponent: React.FC<Iprops> = ({ text, variant, isSignupFlow }) => {
   const [showModal, setShowModal] = useState(false)
+  const [userData, setUserData] = useState<IUserData>({
+    email: '',
+    password: ''
+  })
+
+  const dispatch = useDispatch<AppDispatch>()
 
   const showModalHandler = (): void => {
     setShowModal(true)
@@ -15,6 +25,24 @@ const ModalComponent: React.FC<Iprops> = ({ text, variant }) => {
 
   const closeModalHandler = (): void => {
     setShowModal(false)
+  }
+
+  const onChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setUserData((prevData) => {
+      return { ...prevData, [e.target.name]: e.target.value }
+    })
+  }
+
+  const clickHandler = () => {
+    if (userData.email.trim() === '' && userData.password.trim() === '') {
+      return
+    }
+
+    if (isSignupFlow) {
+      dispatch(registerUser(userData))
+    } else {
+      dispatch(loginUser(userData))
+    }
   }
 
   return (
@@ -34,11 +62,21 @@ const ModalComponent: React.FC<Iprops> = ({ text, variant }) => {
         <Modal.Body>
           <InputGroup className='mb-3'>
             <InputGroup.Text>Email</InputGroup.Text>
-            <FormControl type='email' />
+            <FormControl
+              onChange={onChange}
+              value={userData.email}
+              type='email'
+              name='email'
+            />
           </InputGroup>
           <InputGroup>
             <InputGroup.Text>Password</InputGroup.Text>
-            <FormControl type='password' />
+            <FormControl
+              onChange={onChange}
+              value={userData.password}
+              type='password'
+              name='password'
+            />
           </InputGroup>
         </Modal.Body>
 
@@ -46,7 +84,9 @@ const ModalComponent: React.FC<Iprops> = ({ text, variant }) => {
           <Button variant='secondary' onClick={closeModalHandler}>
             Close
           </Button>
-          <Button variant={variant}>{text}</Button>
+          <Button onClick={clickHandler} variant={variant}>
+            {text}
+          </Button>
         </Modal.Footer>
       </Modal>
     </>

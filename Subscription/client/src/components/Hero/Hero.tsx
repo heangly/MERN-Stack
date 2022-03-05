@@ -1,4 +1,4 @@
-import { Navbar, NavItem, NavLink, Container } from 'react-bootstrap'
+import { Container } from 'react-bootstrap'
 import ModalComponent from '../Modal/Modal'
 import styled from 'styled-components'
 
@@ -12,8 +12,12 @@ const Hero = () => {
             Grow, learn, and become more successful by reading some of the top
             article by highly reputation indiiduals
           </SubHeading>
-          <ModalComponent text='Sign Up' variant='primary' />
-          <ModalComponent text='Login' variant='danger' />
+          <ModalComponent
+            text='Sign Up'
+            variant='primary'
+            isSignupFlow={true}
+          />
+          <ModalComponent text='Login' variant='danger' isSignupFlow={false} />
         </HeaderContainer>
       </Container>
     </HeaderComponent>

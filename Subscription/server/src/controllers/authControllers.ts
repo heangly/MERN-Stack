@@ -35,7 +35,6 @@ export const signup = asyncHandler(
     if (exisitingUser) throw new Error('User already exists!')
 
     const user = await UserModel.create({ email, password })
-
     res.status(201).json({
       email: user.email,
       token: generateToken(user._id)
