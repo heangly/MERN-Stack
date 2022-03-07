@@ -7,7 +7,7 @@ interface IRequest extends Request {
   user?: string
 }
 
-const protect = asyncHandler(
+export const protect = asyncHandler(
   async (req: IRequest, res: Response, next: NextFunction) => {
     let token
     if (req.headers.authorization?.startsWith('Bearer')) {
@@ -43,5 +43,3 @@ const protect = asyncHandler(
 //     throw new Error('Not authorized as an admin')
 //   }
 // }
-
-export { protect }

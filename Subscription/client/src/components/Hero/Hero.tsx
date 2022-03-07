@@ -1,8 +1,18 @@
-import { Container } from 'react-bootstrap'
+import { Button, Container } from 'react-bootstrap'
 import ModalComponent from '../Modal/Modal'
 import styled from 'styled-components'
+import { useNavigate } from 'react-router'
+import { RootState } from '../../app/store'
+import { useSelector } from 'react-redux'
 
 const Hero = () => {
+  const navigate = useNavigate()
+  const { user } = useSelector((state: RootState) => state.auth)
+
+  const goToArticleHandler = () => {
+    navigate('/articles')
+  }
+
   return (
     <HeaderComponent>
       <Container>
@@ -12,12 +22,28 @@ const Hero = () => {
             Grow, learn, and become more successful by reading some of the top
             article by highly reputation indiiduals
           </SubHeading>
-          <ModalComponent
-            text='Sign Up'
-            variant='primary'
-            isSignupFlow={true}
-          />
-          <ModalComponent text='Login' variant='danger' isSignupFlow={false} />
+          {!user.email ? (
+            <>
+              <ModalComponent
+                text='Sign Up'
+                variant='primary'
+                isSignupFlow={true}
+              />
+              <ModalComponent
+                text='Login'
+                variant='danger'
+                isSignupFlow={false}
+              />
+            </>
+          ) : (
+            <Button
+              variant='info'
+              style={{ width: '100%' }}
+              onClick={goToArticleHandler}
+            >
+              Go to Article
+            </Button>
+          )}
         </HeaderContainer>
       </Container>
     </HeaderComponent>

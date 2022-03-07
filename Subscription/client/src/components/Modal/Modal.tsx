@@ -1,8 +1,9 @@
-import { useState } from 'react'
+import React, { useState } from 'react'
 import { Button, Modal, InputGroup, FormControl } from 'react-bootstrap'
 import { useDispatch } from 'react-redux'
 import { AppDispatch } from '../../app/store'
-import { IUserData, loginUser, registerUser } from '../../features/authSlice'
+import { IUserData } from '../../features/authSlice'
+import { loginUser, registerUser } from '../../features/authActions'
 
 interface Iprops {
   text: string
@@ -27,13 +28,13 @@ const ModalComponent: React.FC<Iprops> = ({ text, variant, isSignupFlow }) => {
     setShowModal(false)
   }
 
-  const onChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+  const onChange = (e: React.ChangeEvent<HTMLInputElement>): void => {
     setUserData((prevData) => {
       return { ...prevData, [e.target.name]: e.target.value }
     })
   }
 
-  const clickHandler = () => {
+  const clickHandler = (): void => {
     if (userData.email.trim() === '' && userData.password.trim() === '') {
       return
     }
