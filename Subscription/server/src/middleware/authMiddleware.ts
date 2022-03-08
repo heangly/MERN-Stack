@@ -3,8 +3,8 @@ import asyncHandler from 'express-async-handler'
 import UserModel from '../models/User'
 import { NextFunction, Request, Response } from 'express'
 
-interface IRequest extends Request {
-  user?: string
+export interface IRequest extends Request {
+  user?: { _id: string; email: string; stripeCustomerId: string }
 }
 
 export const protect = asyncHandler(
@@ -16,10 +16,17 @@ export const protect = asyncHandler(
         const decoded = jwt.verify(token, process.env.JWT_SECRET!) as JwtPayload
 
         // '-password' = dont include password
-        // set req.user to have loggined user data
-        req.user = await UserModel.findById(decoded.id as string).select(
+        const user = await UserModel.findById(decoded.id as string).select(
           '-password'
         )
+
+        if (!user) {
+          res.status(401)
+          throw new Error('Not authorized, token failed')
+        }
+
+        // set req.user to have loggined user data
+        req.user = user
         next()
       } catch (error) {
         console.error(error)

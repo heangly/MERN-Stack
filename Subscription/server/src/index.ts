@@ -1,9 +1,9 @@
-import express, { NextFunction, Request, Response } from 'express'
+import express from 'express'
 import dotEnv from 'dotenv'
 import 'colors'
-
 import { errorHandler, notFound } from './middleware/errorMiddleware'
 import authRoutes from './routes/auths'
+import subscriptionRoutes from './routes/subscriptions'
 import { connectDB } from './config/connectDB'
 
 dotEnv.config()
@@ -13,6 +13,7 @@ const app = express()
 app.use(express.json())
 
 app.use('/api/auth/', authRoutes)
+app.use('/api/subs/', subscriptionRoutes)
 
 app.use(notFound)
 app.use(errorHandler)

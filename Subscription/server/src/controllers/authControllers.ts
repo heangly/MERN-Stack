@@ -3,6 +3,7 @@ import asyncHandler from 'express-async-handler'
 import { Response } from 'express'
 import UserModel from '../models/User'
 import generateToken from '../utiles/generateToken'
+import { stripe } from '../utiles/stripe'
 
 interface IBody {
   email: string
@@ -34,9 +35,17 @@ export const signup = asyncHandler(
     const exisitingUser = await UserModel.findOne({ email })
     if (exisitingUser) throw new Error('User already exists!')
 
-    const user = await UserModel.create({ email, password })
+    const customer = await stripe.customers.create(
+      {
+        email
+      },
+      { apiKey: process.env.STRIPE_SECRET_KEY }
+    )
+
+    const stripeCustomerId = customer.id
+
+    const user = await UserModel.create({ email, password, stripeCustomerId })
     res.status(201).json({
-      email: user.email,
       token: generateToken(user._id)
     })
   }
@@ -52,10 +61,13 @@ export const signin = asyncHandler(
 
     const user = await UserModel.findOne({ email })
 
-    if (user && (await user.matchPassword(password))) {
+    if (!user) {
+      res.status(401)
+      throw new Error('User does not exist')
+    }
+
+    if (await user.matchPassword(password)) {
       res.json({
-        name: user.name,
-        email: user.email,
         token: generateToken(user._id)
       })
     } else {

@@ -17,6 +17,12 @@ const userSchema = new Schema(
       required: [true, 'Please enter the password to Model'],
       min: 5,
       unique: false
+    },
+
+    stripeCustomerId: {
+      type: String,
+      trim: true,
+      unique: true
     }
   },
   {
