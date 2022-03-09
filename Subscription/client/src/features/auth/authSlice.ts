@@ -1,14 +1,18 @@
-import { createSlice, PayloadAction } from '@reduxjs/toolkit'
+import {
+  ActionReducerMapBuilder,
+  createSlice,
+  PayloadAction
+} from '@reduxjs/toolkit'
 import { toast } from 'react-toastify'
 import { WritableDraft } from 'immer/dist/internal'
 import { ReactText } from 'react'
 import { Auth, LocalStorageUser, loginUser, registerUser } from './authActions'
 
 interface IInitialState {
-  user: { email: string; token: string }
   isLoading: boolean
   isError: boolean
   message: string
+  user: { token: string }
 }
 
 export interface IUserData {
@@ -17,16 +21,17 @@ export interface IUserData {
 }
 
 export interface IAuthSuccessReturnData {
-  email: string
   token: string
 }
+
+const initialUser = { token: '' }
 
 const userInLocalStorage = JSON.parse(
   localStorage.getItem(LocalStorageUser.user)!
 )
 
 const initialState: IInitialState = {
-  user: userInLocalStorage ?? { email: '', token: '' },
+  user: userInLocalStorage ?? initialUser,
   isLoading: false,
   isError: false,
   message: ''
@@ -34,22 +39,21 @@ const initialState: IInitialState = {
 
 let toastId: ReactText
 
-export const authSlice = createSlice({
+const authSlice = createSlice({
   name: Auth.Auth,
   initialState,
   reducers: {
     resetAuth: (state) => {
-      updateReducers(state, false, false, '', { email: '', token: '' })
+      updateReducers(state, false, false, '', initialUser)
       localStorage.removeItem(LocalStorageUser.user)
       toast.dismiss()
       toast.success('Logout Successfully!')
     }
   },
-  extraReducers: (builder) => {
+  extraReducers: (builder: ActionReducerMapBuilder<IInitialState>) => {
     builder
       // REGISTER
       .addCase(registerUser.pending, (state) => {
-        updateReducers(state, true, false, '', { email: '', token: '' })
         toast.dismiss()
         toastId = toast.loading('Laoding...')
       })
@@ -63,13 +67,13 @@ export const authSlice = createSlice({
       )
       .addCase(registerUser.rejected, (state, action) => {
         const message = action.payload as string
-        updateReducers(state, false, true, message, { email: '', token: '' })
+        updateReducers(state, false, true, message, initialUser)
         toast.dismiss(toastId)
         toast.error(message)
       })
       // LOGIN
       .addCase(loginUser.pending, (state) => {
-        updateReducers(state, true, false, '', { email: '', token: '' })
+        updateReducers(state, true, false, '', initialUser)
         toast.dismiss()
         toastId = toast.loading('Loading..')
       })
@@ -83,7 +87,7 @@ export const authSlice = createSlice({
       )
       .addCase(loginUser.rejected, (state, action) => {
         const message = action.payload as string
-        updateReducers(state, false, true, message, { email: '', token: '' })
+        updateReducers(state, false, true, message, initialUser)
         toast.dismiss(toastId)
         toast.error(state.message)
       })

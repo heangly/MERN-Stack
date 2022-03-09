@@ -4,7 +4,7 @@ import { RootState } from '../app/store'
 
 const ProtectedRoute = () => {
   const { user } = useSelector((state: RootState) => state.auth)
-  return user.email ? <Outlet /> : <Navigate to='/' />
+  return user.token ? <Outlet /> : <Navigate to='/' />
 }
 
 export default ProtectedRoute

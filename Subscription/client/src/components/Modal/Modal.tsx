@@ -2,8 +2,8 @@ import React, { useState } from 'react'
 import { Button, Modal, InputGroup, FormControl } from 'react-bootstrap'
 import { useDispatch } from 'react-redux'
 import { AppDispatch } from '../../app/store'
-import { IUserData } from '../../features/authSlice'
-import { loginUser, registerUser } from '../../features/authActions'
+import { IUserData } from '../../features/auth/authSlice'
+import { loginUser, registerUser } from '../../features/auth/authActions'
 
 interface Iprops {
   text: string

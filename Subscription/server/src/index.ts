@@ -4,6 +4,7 @@ import 'colors'
 import { errorHandler, notFound } from './middleware/errorMiddleware'
 import authRoutes from './routes/auths'
 import subscriptionRoutes from './routes/subscriptions'
+import articleRoutes from './routes/articles'
 import { connectDB } from './config/connectDB'
 
 dotEnv.config()
@@ -14,6 +15,7 @@ app.use(express.json())
 
 app.use('/api/auth/', authRoutes)
 app.use('/api/subs/', subscriptionRoutes)
+app.use('/api/articles', articleRoutes)
 
 app.use(notFound)
 app.use(errorHandler)

@@ -1,6 +1,7 @@
 import { Request, Response } from 'express'
 import asynHandler from 'express-async-handler'
 import { IRequest } from '../middleware/authMiddleware'
+import Article from '../models/Article'
 import User from '../models/User'
 import { stripe } from '../utiles/stripe'
 

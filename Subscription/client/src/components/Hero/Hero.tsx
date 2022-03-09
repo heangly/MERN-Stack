@@ -22,7 +22,7 @@ const Hero = () => {
             Grow, learn, and become more successful by reading some of the top
             article by highly reputation indiiduals
           </SubHeading>
-          {!user.email ? (
+          {!user.token ? (
             <>
               <ModalComponent
                 text='Sign Up'
